@@ -41,3 +41,9 @@ infected with two avian *Plasmodium* species.
   with the date, what I asked for, which files you created or changed,
   and any key findings and decisions (including alternatives that were rejected)
 - Keep entries short
+
+- Do not suggest Slurm batch jobs or `#SBATCH` directives unless I explicitly ask for them. For now, assume scripts will be run interactively on an OSC compute node.
+
+- Before suggesting extra Apptainer bind options or other environment-specific changes, check whether the existing command has already run successfully; do not add complexity for a problem that has not occurred.
+
+\ No newline at end of file
