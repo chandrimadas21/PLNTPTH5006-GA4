@@ -1,0 +1,14 @@
+Request: In scripts/trimgalore.sh, add a check that both input FASTQ files exist, and exit with an informative error message if they don't.
+
+Change made: added two existence checks right after the initial logging block and before mkdir -p "$outdir":
+
+    if [[ ! -f "$fastq_r1" ]]; then
+        echo "Error: R1 FASTQ file not found: $fastq_r1" >&2
+        exit 1
+    fi
+    if [[ ! -f "$fastq_r2" ]]; then
+        echo "Error: R2 FASTQ file not found: $fastq_r2" >&2
+        exit 1
+    fi
+
+Each error message is written to stderr and names the specific missing file, so a typo'd path or swapped R1/R2 argument fails immediately with a clear message instead of a less informative error partway through TrimGalore.

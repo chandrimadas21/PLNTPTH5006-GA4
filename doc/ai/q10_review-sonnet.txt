@@ -1,0 +1,7 @@
+Review of scripts/trimgalore.sh — 5 most important problems/improvements, most important first:
+
+1. No version-report line at the end — CLAUDE.md requires reporting the program version on success, but this script never calls `trim_galore --version`.
+2. Unconfirmed that FastQC is bundled in the TrimGalore container — `--fastqc` triggers a FastQC call from inside the same image; worth verifying `trim-galore:2.3.0--a56e49e832976df4` actually includes it, since a missing binary would fail silently mid-run.
+3. No input file existence check — if `$fastq_r1`/`$fastq_r2` don't exist, `trim_galore` fails with a less clear error than an early explicit check would give.
+4. Hardcoded container tag with no comment on why 2.3.0 was chosen — not a bug now, but if this image version changes elsewhere in the project, an unexplained mismatch could appear later.
+5. `apptainer exec` doesn't explicitly bind extra directories — since inputs may live outside default-bound paths (e.g. `../garrigos/fastq`), this could break depending on OSC's Apptainer bind config; worth verifying explicitly rather than assuming default binds cover it.

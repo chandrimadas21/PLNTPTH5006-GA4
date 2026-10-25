@@ -1,0 +1,9 @@
+Review of scripts/trimgalore.sh — 5 most important problems/improvements, most important first:
+
+1. No program version reported — CLAUDE.md requires reporting the program version at the end, but the script never does (e.g. add `apptainer exec "$CONTAINER" trim_galore --version` before the success message).
+2. No argument-count check — with `set -u`, a missing argument fails with a cryptic `$3: unbound variable` error instead of printing the usage line and exiting.
+3. No input file checks — a typo'd path or swapped R1/R2 should fail right away with a clear message (`[[ -f "$fastq_r1" ]]`), not partway through TrimGalore.
+4. Awkward output file names — TrimGalore writes names like `S63_R1_val_1.fq.gz`; renaming them to `S63_R1.fastq.gz` at the end makes later scripts and globs simpler and matches the input naming.
+5. No `#SBATCH` directives — at OSC this should run as a Slurm batch job, not on a login node, and putting `--account`, `--time` and `--output` in the script makes each submission reproducible.
+
+Minor: the FastQC reports land in the same folder as the trimmed FASTQs, while the project wants a separate subdir per step; `--fastqc_args "--outdir ..."` can send them to their own folder.
