@@ -334,11 +334,19 @@ The command loops through the R2 trimming report for each sample. `basename` rem
 
 *Answer*: What you added to `CLAUDE.md`, and why:
 
+I added an instruction telling Claude not to suggest Slurm batch jobs or `#SBATCH` directives unless I explicitly ask for them, because we are currently running scripts interactively on an OSC compute node. I also added an instruction telling Claude not to suggest extra Apptainer bind options or other environment-specific changes when the existing command has already run successfully. I added these because earlier reviews suggested changes that were unnecessary or did not fit our current course workflow.
+
 *Answer*: Did Claude follow the new instruction?
+
+Not completely. When I tested it in a new conversation, Claude still suggested using `sbatch`, even though I had specifically told it not to suggest Slurm batch jobs unless I asked. However, it did not suggest extra Apptainer bind options. This showed me that `CLAUDE.md` instructions can help guide Claude, but Claude may not always follow every instruction correctly.
 
 ### 19: Reflection
 
 *Answer*:
+
+Using Claude was helpful because it could quickly review my shell script, suggest possible improvements, and help me think through how the script might behave in different situations. I especially found it useful for identifying the lack of an input-file check and for helping generate the loop for running TrimGalore across multiple samples. Its explanations were usually clear, but sometimes it suggested things that were more complicated than what we were using in class.
+
+One challenge was that Claude did not always follow the course context or the instructions in `CLAUDE.md`. For example, it repeatedly suggested using Slurm/`sbatch` and adding a separate TrimGalore version command, even though those suggestions did not fit the specific instructions for this assignment. I found this out by comparing Claude's suggestions with the assignment directions, our course practices, and by testing the script myself. This made me realize that generative AI can be very useful for ideas and troubleshooting, but its suggestions still need to be checked instead of accepted automatically.
 
 ------------------------------------------------------------------------
 
