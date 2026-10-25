@@ -20,6 +20,16 @@ echo "R2 FASTQ file:   $fastq_r2"
 echo "Output dir:      $outdir"
 echo
 
+# Check that both input FASTQ files exist
+if [[ ! -f "$fastq_r1" ]]; then
+    echo "Error: R1 FASTQ file not found: $fastq_r1" >&2
+    exit 1
+fi
+if [[ ! -f "$fastq_r2" ]]; then
+    echo "Error: R2 FASTQ file not found: $fastq_r2" >&2
+    exit 1
+fi
+
 # Create the output dir if needed
 mkdir -p "$outdir"
 
