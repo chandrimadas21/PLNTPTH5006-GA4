@@ -1,15 +1,5 @@
-<!--
-GA4 README template.
-- Add your answers to each question's section below.
-- For each question where we want you to add your commands,
-  put the command(s) you ran in the terminal in the corresponding ```bash code block.
-- Where we want to see a command's output, there is a plain ``` code block
-  right below the command block: paste the output there.
-- You don't need to paste the contents of your scripts into this file:
-  we will look at the scripts in your `scripts` dir directly
-  (so make sure you commit them!).
-- Delete instructional comments like this one as you go.
--->
+```{=html}
+```
 
 # GA4 answers - Chandrima Das
 
@@ -33,29 +23,30 @@ GA4 README template.
 
 ### 3: A TrimGalore container, its help info, and three options
 
-*Answer*: The container link (URI) is:
+*Answer*: The container link (URI) is:[community.wave.seqera.io/library/trim-galore:2.3.0--2b255ff43100a747](oras://community.wave.seqera.io/library/trim-galore:2.3.0--dfb1fd48e19a6cf3)
 
 Code to run `trim_galore --help` with the container:
 
-```bash
-# Your command:
+``` bash
+apptainer exec oras://community.wave.seqera.io/library/trim-galore:2.3.0--a56e49e832976df4 \
+    trim_galore --help
 ```
 
 <!-- You don't need to paste the TrimGalore help output -->
 
-*Answer*: The option to indicate that the reads are paired-end:
+*Answer*: The option to indicate that the reads are paired-end: `--paired`
 
-*Answer*: The option to set the output dir:
+*Answer*: The option to set the output dir: `-o` or `--output_dir`
 
-*Answer*: The option to run FastQC on the trimmed FASTQ files:
+*Answer*: The option to run FastQC on the trimmed FASTQ files: `--fastqc`
 
 ### 4: Default thresholds
 
-*Answer*: A) The default base quality score threshold:
+*Answer*: A) The default base quality score threshold: `20`
 
-*Answer*: B) The default read length threshold:
+*Answer*: B) The default read length threshold: `20bp`
 
-### 5: Write the `trimgalore.sh` script
+### touch scripts/trimgalore.sh5: Write the `trimgalore.sh` script
 
 <!-- No need to paste the script: we'll look at scripts/trimgalore.sh directly. -->
 
@@ -63,24 +54,30 @@ Code to run `trim_galore --help` with the container:
 
 Code to run the script:
 
-```bash
-# Your command:
+``` bash
+bash scripts/trimgalore.sh \
+    ../garrigos/fastq/S63_R1.fastq.gz \
+    ../garrigos/fastq/S63_R2.fastq.gz \
+    results/trimgalore
 ```
 
 <!-- You don't need to paste the TrimGalore logging output -->
 
 Code to list the output files:
 
-```bash
-# Your command:
+``` bash
+ls results/trimgalore
 ```
 
 The output of the command was:
 
-```
+```         
+[carbohydrate21@p0220 GA4]$ ls results/trimgalore
+S63_R1.fastq.gz_trimming_report.json  S63_R1_val_1_fastqc.html  S63_R1_val_1.fq.gz                    S63_R2.fastq.gz_trimming_report.txt  S63_R2_val_2_fastqc.zip
+S63_R1.fastq.gz_trimming_report.txt   S63_R1_val_1_fastqc.zip   S63_R2.fastq.gz_trimming_report.json  S63_R2_val_2_fastqc.html             S63_R2_val_2.fq.gz
 ```
 
-*Answer*: What each type of output file contains:
+*Answer*: What each type of output file contains: The `.fq.gz` files contain the trimmed R1 and R2 sequencing reads. The `_trimming_report.txt` files contain human-readable summaries of the trimming results, while the `.json` files contain the trimming results in a structured format. The `_fastqc.html` files are the FastQC reports for viewing the quality of the trimmed reads, and the `_fastqc.zip` files contain the underlying FastQC result files.
 
 <!-- If your script failed at first: describe the problem and your fix here. -->
 
@@ -104,13 +101,11 @@ The output of the command was:
 
 ### 9: Compare the FastQC reports before and after trimming
 
-*Answer*: At least two differences between the reports,
-and whether things look better in terms of pass/warn/fail status:
+*Answer*: At least two differences between the reports, and whether things look better in terms of pass/warn/fail status:
 
-*Answer*: Were the short reads with only `N`s removed?
-If so, was that due to the length threshold, or something else?
+*Answer*: Were the short reads with only `N`s removed? If so, was that due to the length threshold, or something else?
 
-*Answer*: Something you didn't expect or are confused about:
+*Answer*: Something you didn't expect or are confused about:git add scripts/trimgalore.sh git commit -m "Add TrimGalore script"
 
 ------------------------------------------------------------------------
 
@@ -122,11 +117,9 @@ If so, was that due to the length threshold, or something else?
 
 *Answer*: Your prompt:
 
-*Answer*: Claude's suggestions, and for each, whether you agree, disagree,
-or don't understand it, and why:
+*Answer*: Claude's suggestions, and for each, whether you agree, disagree, or don't understand it, and why:
 
-*Answer*: Was anything wrong, or in conflict with the course's practices?
-Did Claude refer to your `CLAUDE.md` conventions?
+*Answer*: Was anything wrong, or in conflict with the course's practices? Did Claude refer to your `CLAUDE.md` conventions?
 
 *Answer*: The estimated cost of this conversation (from `/usage`):
 
@@ -142,18 +135,17 @@ Did Claude refer to your `CLAUDE.md` conventions?
 
 *Answer*: Did Opus's review change your mind about any of your answers to question 10?
 
-*Answer*: How did the costs compare? Which review would you trust more, and why?
-Was the difference worth the difference in cost?
+*Answer*: How did the costs compare? Which review would you trust more, and why? Was the difference worth the difference in cost?
 
 ### 12: Run the script with a non-existent file
 
-```bash
+``` bash
 # Your command:
 ```
 
 The output of the command was:
 
-```
+```         
 ```
 
 *Answer*: What happens, and at which point does the script stop?
@@ -162,13 +154,13 @@ The output of the command was:
 
 *Answer*: Your prompt:
 
-```bash
+``` bash
 # Your command to test the updated script:
 ```
 
 The output of the command was:
 
-```
+```         
 ```
 
 *Answer*: Does it behave the way Claude claimed it would?
@@ -181,7 +173,7 @@ The output of the command was:
 
 The loop that Claude wrote:
 
-```bash
+``` bash
 # Paste Claude's loop here
 ```
 
@@ -197,24 +189,24 @@ The loop that Claude wrote:
 
 The loop with `echo`, to test it:
 
-```bash
+``` bash
 # Your loop:
 ```
 
 The output of the loop was:
 
-```
+```         
 ```
 
 <!-- You don't need to paste the output of the loop that ran TrimGalore -->
 
-```bash
+``` bash
 # Your command(s) to check the output files:
 ```
 
 The output of the command(s) was:
 
-```
+```         
 ```
 
 *Answer*: Are all 7 samples represented?
@@ -223,13 +215,13 @@ The output of the command(s) was:
 
 *Answer*: Your prompt:
 
-```bash
+``` bash
 # The command you got from Claude:
 ```
 
 The output of the command was:
 
-```
+```         
 ```
 
 *Answer*: Did the output look right? If not, what did you do?
