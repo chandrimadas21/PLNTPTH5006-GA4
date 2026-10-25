@@ -83,29 +83,43 @@ S63_R1.fastq.gz_trimming_report.txt   S63_R1_val_1_fastqc.zip   S63_R2.fastq.gz_
 
 ### 7: Trimming results
 
-*Answer*: Which adapter sequence TrimGalore looked for, and how it decided on this:
+*Answer*: Which adapter sequence TrimGalore looked for, and how it decided on this: Which adapter sequence TrimGalore looked for, and how it decided on this: TrimGalore looked for the Illumina adapter sequence `AGATCGGAAGAGC`. I did not specify an adapter, so TrimGalore auto-detected the adapter type from the reads. It detected the Illumina adapter, while the second-best match, Nextera, had no hits.
 
-*Answer*: Percentage of reads with adapters in R1 and R2:
+*Answer*: Percentage of reads with adapters in R1 and R2: `13.0%` in R1 and `10.1%` in R2.
 
 *Answer*: In R1 and R2, were more bases removed by quality trimming or by adapter trimming?
 
-*Answer*: Percentage of read pairs that were removed:
+More bases were removed by quality trimming in both files. In R1, 1,274,150 bases were removed by quality trimming compared with about 85,527 bases by adapter trimming. In R2, 1,283,793 bases were removed by quality trimming compared with about 60,540 bases by adapter trimming.
+
+*Answer*: Percentage of read pairs that were removed: `7.4%`
 
 ### 8: Poly-G trimming
 
 *Answer*: Did TrimGalore do poly-G trimming, and did you have to tell it to?
 
+Yes. TrimGalore performed poly-G trimming automatically. I did not have to specify the `--poly_g` option because TrimGalore detected the poly-G pattern in the reads and enabled trimming on its own.
+
 *Answer*: What TrimGalore concludes about the sequencing technology:
 
+TrimGalore concluded that the reads are consistent with two-color Illumina sequencing chemistry, such as NovaSeq or NextSeq, because it detected poly-G tails characteristic of this type of sequencing.
+
 *Answer*: Was more poly-G trimming done in R1 or R2? (Optional: any idea why?)
+
+More poly-G trimming was done in R2. In R1, 11,919 reads (2.4%) had poly-G trimming, removing 90,248 bases. In R2, 43,397 reads (8.7%) were trimmed, removing 1,187,383 bases. One possible reason is that R2 reads often show poorer quality toward the end of the read, which could make the two-color sequencing artifact more apparent in R2.
 
 ### 9: Compare the FastQC reports before and after trimming
 
 *Answer*: At least two differences between the reports, and whether things look better in terms of pass/warn/fail status:
 
+After trimming, the quality toward the ends of the reads improved and the adapter content was reduced. The sequence length distribution also changed because trimming produced reads of different lengths instead of mostly the original read length. Overall, the trimmed reads look better in terms of FastQC pass/warn/fail status, although the sequence length distribution can still show a warning because the reads now have variable lengths after trimming.
+
 *Answer*: Were the short reads with only `N`s removed? If so, was that due to the length threshold, or something else?
 
+The short `N`-only reads appear to have been removed. This was not due to an N-content filter, because the TrimGalore report showed that 0 reads were removed for having too many `N` bases. Instead, the reads were trimmed and then became shorter than the 20-bp minimum length threshold, causing them to be removed.
+
 *Answer*: Something you didn't expect or are confused about:git add scripts/trimgalore.sh git commit -m "Add TrimGalore script"
+
+I did not expect the sequence length distribution to still show a warning after trimming. I initially thought trimming would make all of the FastQC results improve, but I realized that trimming makes the reads different lengths, so this warning does not necessarily mean the data quality became worse.
 
 ------------------------------------------------------------------------
 
